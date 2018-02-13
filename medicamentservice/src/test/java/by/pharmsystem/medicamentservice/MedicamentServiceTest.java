@@ -1,14 +1,12 @@
 package by.pharmsystem.medicamentservice;
 
-import by.pharmsystem.medicamentservice.entity.Medicament;
 import by.pharmsystem.medicamentservice.service.MedicamentService;
+import by.pharmsystem.medicamentservice.service.util.constant.FormStorage;
 import org.junit.Test;
-import org.junit.runner.RunWith;
 import org.mockito.Mock;
-import org.mockito.runners.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
-@RunWith(MockitoJUnitRunner.class)
+//@RunWith(MockitoJUnitRunner.class)
 @SpringBootTest
 public class MedicamentServiceTest {
 
@@ -17,7 +15,7 @@ public class MedicamentServiceTest {
 
     @Test
     public void addMedicamentTest() {
-        medicamentService.add(new Medicament());
+
     }
 
 }

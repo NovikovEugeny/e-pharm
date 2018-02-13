@@ -1,6 +1,6 @@
 package by.pharmsystem.userservice.service.util;
 
-public final class UserConstants {
+public final class ConstantStorage {
     public final static String LOGIN = "login";
     public final static String NEW_LOGIN = "newLogin";
     public final static String PASSWORD = "password";

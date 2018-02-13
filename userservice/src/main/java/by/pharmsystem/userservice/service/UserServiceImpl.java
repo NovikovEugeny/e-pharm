@@ -5,7 +5,7 @@ import by.pharmsystem.userservice.repository.UserRepository;
 import by.pharmsystem.userservice.service.exception.BadRequestException;
 import by.pharmsystem.userservice.service.exception.ConflictException;
 import by.pharmsystem.userservice.service.exception.NoSuchEmail;
-import by.pharmsystem.userservice.service.util.UserConstants;
+import by.pharmsystem.userservice.service.util.ConstantStorage;
 import by.pharmsystem.userservice.service.util.generator.IdGenerator;
 import by.pharmsystem.userservice.service.util.generator.PasswordGenerator;
 import by.pharmsystem.userservice.service.util.validator.RegExp;
@@ -58,15 +58,15 @@ public class UserServiceImpl implements UserService {
 
         UserValidator.validateSignUp(data);
 
-        if (userRepository.findByLogin(data.get(UserConstants.LOGIN)) != null) {
+        if (userRepository.findByLogin(data.get(ConstantStorage.LOGIN)) != null) {
             throw new ConflictException();
         }
 
         User user = new User();
         user.setId(IdGenerator.generate(data));
-        user.setName(data.get(UserConstants.NAME));
-        user.setLogin(data.get(UserConstants.LOGIN));
-        user.setRole(data.get(UserConstants.ROLE));
+        user.setName(data.get(ConstantStorage.NAME));
+        user.setLogin(data.get(ConstantStorage.LOGIN));
+        user.setRole(data.get(ConstantStorage.ROLE));
 
         String password = PasswordGenerator.generate(user);
         System.out.println(password);
@@ -109,9 +109,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void changeLogin(Map<String, String> data) {
-        String login = data.get(UserConstants.LOGIN);
-        String newLogin = data.get(UserConstants.NEW_LOGIN);
-        String password = data.get(UserConstants.PASSWORD);
+        String login = data.get(ConstantStorage.LOGIN);
+        String newLogin = data.get(ConstantStorage.NEW_LOGIN);
+        String password = data.get(ConstantStorage.PASSWORD);
 
         if (!RegExp.test(RegExp.EMAIL_REG_EXP, newLogin)) {
             throw new BadRequestException();

@@ -1,7 +1,7 @@
 package by.pharmsystem.userservice.service.util.validator;
 
 import by.pharmsystem.userservice.service.exception.BadRequestException;
-import by.pharmsystem.userservice.service.util.UserConstants;
+import by.pharmsystem.userservice.service.util.ConstantStorage;
 
 import java.util.Map;
 
@@ -18,47 +18,47 @@ public final class UserValidator {
     }
 
     public static void validateSignUp(Map<String, String> data) {
-        if (data.get(UserConstants.REGION) == null || data.get(UserConstants.REGION).isEmpty()) {
+        if (data.get(ConstantStorage.REGION) == null || data.get(ConstantStorage.REGION).isEmpty()) {
             throw new BadRequestException();
         }
-        if (!RegExp.test(RegExp.REGION_REG_EXP, data.get(UserConstants.REGION))) {
+        if (!RegExp.test(RegExp.REGION_REG_EXP, data.get(ConstantStorage.REGION))) {
             throw new BadRequestException();
         }
-        if (data.get(UserConstants.POLYCLINIC_NUMBER) == null || data.get(UserConstants.POLYCLINIC_NUMBER).isEmpty()) {
+        if (data.get(ConstantStorage.POLYCLINIC_NUMBER) == null || data.get(ConstantStorage.POLYCLINIC_NUMBER).isEmpty()) {
             throw new BadRequestException();
         }
-        if (!RegExp.test(RegExp.POLYCLINIC_NUMBER_REG_EXP, data.get(UserConstants.POLYCLINIC_NUMBER))) {
+        if (!RegExp.test(RegExp.POLYCLINIC_NUMBER_REG_EXP, data.get(ConstantStorage.POLYCLINIC_NUMBER))) {
             throw new BadRequestException();
         }
-        if (data.get(UserConstants.PATIENT_CARD_NUMBER) == null || data.get(UserConstants.PATIENT_CARD_NUMBER).isEmpty()) {
+        if (data.get(ConstantStorage.PATIENT_CARD_NUMBER) == null || data.get(ConstantStorage.PATIENT_CARD_NUMBER).isEmpty()) {
             throw new BadRequestException();
         }
-        if (!RegExp.test(RegExp.PATIENT_CARD_NUMBER_REG_EXP, data.get(UserConstants.PATIENT_CARD_NUMBER))) {
+        if (!RegExp.test(RegExp.PATIENT_CARD_NUMBER_REG_EXP, data.get(ConstantStorage.PATIENT_CARD_NUMBER))) {
             throw new BadRequestException();
         }
-        if (data.get(UserConstants.NAME) == null || data.get(UserConstants.NAME).isEmpty()) {
+        if (data.get(ConstantStorage.NAME) == null || data.get(ConstantStorage.NAME).isEmpty()) {
             throw new BadRequestException();
         }
-        if (!RegExp.test(RegExp.NAME_REG_EXP, data.get(UserConstants.NAME))) {
+        if (!RegExp.test(RegExp.NAME_REG_EXP, data.get(ConstantStorage.NAME))) {
             throw new BadRequestException();
         }
-        if (data.get(UserConstants.LOGIN) == null || data.get(UserConstants.LOGIN).isEmpty()) {
+        if (data.get(ConstantStorage.LOGIN) == null || data.get(ConstantStorage.LOGIN).isEmpty()) {
             throw new BadRequestException();
         }
-        if (!RegExp.test(RegExp.EMAIL_REG_EXP, data.get(UserConstants.LOGIN))) {
+        if (!RegExp.test(RegExp.EMAIL_REG_EXP, data.get(ConstantStorage.LOGIN))) {
             throw new BadRequestException();
         }
-        validateRole(data.get(UserConstants.ROLE));
+        validateRole(data.get(ConstantStorage.ROLE));
     }
 
     public static void validateRole(String role) {
         if (role == null || role.isEmpty()) {
             throw new BadRequestException();
         }
-        if (!role.equals(UserConstants.CLIENT) &&
-                !role.equals(UserConstants.DOCTOR) &&
-                !role.equals(UserConstants.PHARMACIST) &&
-                !role.equals(UserConstants.ADMIN)) {
+        if (!role.equals(ConstantStorage.CLIENT) &&
+                !role.equals(ConstantStorage.DOCTOR) &&
+                !role.equals(ConstantStorage.PHARMACIST) &&
+                !role.equals(ConstantStorage.ADMIN)) {
             throw new BadRequestException();
         }
     }
