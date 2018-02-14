@@ -102,7 +102,7 @@ public class UserServiceImpl implements UserService {
         user.setRole(newRole);
         userRepository.save(user);
 
-        sendEmail(changeRoleMessage, email);
+        sendEmail(changeRoleMessage + " " + newRole, email);
     }
 
     @Override
