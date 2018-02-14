@@ -18,9 +18,4 @@ public class User implements Serializable {
     private String login;
     private String password;
     private String role;
-
-    public User getDTO() {
-        this.setPassword(null);
-        return this;
-    }
 }
