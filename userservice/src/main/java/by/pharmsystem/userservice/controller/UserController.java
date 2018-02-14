@@ -27,30 +27,26 @@ public class UserController {
     @PostMapping("/sign-in")
     public User signIn(@RequestBody User user, HttpServletResponse response) {
         String token = securityService.setAuthentication(user.getLogin(), user.getPassword());
-        Cookie cookie = new Cookie(tokenName, token);
-        cookie.setPath(cookiePath);
-        response.addCookie(cookie);
+        setCookie(token, response);
         return userService.signIn(user.getLogin(), user.getPassword());
     }
 
+    /*data содержит:
+            -name
+            -login(email)
+            -role
+            -регион(1 цифра)
+            -номер поликлиники(2 цифры)
+            -номер карты(6 цифр)
+    */
     @PostMapping("/sign-up")
     public void signUp(@RequestBody Map<String, String> data, HttpServletResponse response) {
-        /*data содержит:
-        -name
-        -login(email)
-        -role
-        -регион(1 цифра)
-        -номер поликлиники(2 цифры)
-        -номер карты(6 цифр)*/
         userService.signUp(data);
     }
 
     @PostMapping("/log-out")
     public void logout(HttpServletResponse response) {
-        Cookie cookie = new Cookie(tokenName, "");
-        cookie.setPath(cookiePath);
-        cookie.setMaxAge(0);
-        response.addCookie(cookie);
+        deleteCookie(response);
     }
 
     @DeleteMapping("/delete-user/{email}/")
@@ -66,5 +62,18 @@ public class UserController {
     @PatchMapping("/change-login")
     public void changeLogin(@RequestBody Map<String, String> data) {
         userService.changeLogin(data);
+    }
+
+    private void setCookie(String token, HttpServletResponse response) {
+        Cookie cookie = new Cookie(tokenName, token);
+        cookie.setPath(cookiePath);
+        response.addCookie(cookie);
+    }
+
+    private void deleteCookie(HttpServletResponse response) {
+        Cookie cookie = new Cookie(tokenName, "");
+        cookie.setPath(cookiePath);
+        cookie.setMaxAge(0);
+        response.addCookie(cookie);
     }
 }
