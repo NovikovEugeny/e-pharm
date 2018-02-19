@@ -8,7 +8,9 @@ public interface MedicamentService {
 
     void add(Medicament medicament);
 
-    Medicament findById();
+    void addQuantity(long id, int quantity);
+
+    void delete(long id);
 
     List<Medicament> findByGroup(String group);
 

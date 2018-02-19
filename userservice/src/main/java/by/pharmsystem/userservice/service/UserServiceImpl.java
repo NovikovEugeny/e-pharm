@@ -2,13 +2,11 @@ package by.pharmsystem.userservice.service;
 
 import by.pharmsystem.userservice.entity.User;
 import by.pharmsystem.userservice.repository.UserRepository;
-import by.pharmsystem.userservice.service.exception.BadRequestException;
 import by.pharmsystem.userservice.service.exception.ConflictException;
 import by.pharmsystem.userservice.service.exception.NoSuchEmail;
 import by.pharmsystem.userservice.service.util.ConstantStorage;
 import by.pharmsystem.userservice.service.util.generator.IdGenerator;
 import by.pharmsystem.userservice.service.util.generator.PasswordGenerator;
-import by.pharmsystem.userservice.service.util.validator.RegExp;
 import by.pharmsystem.userservice.service.util.validator.UserValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
@@ -112,9 +110,7 @@ public class UserServiceImpl implements UserService {
         String newLogin = data.get(ConstantStorage.NEW_LOGIN);
         String password = data.get(ConstantStorage.PASSWORD);
 
-        if (!RegExp.test(RegExp.EMAIL_REG_EXP, newLogin)) {
-            throw new BadRequestException();
-        }
+        UserValidator.validateLogin(newLogin);
 
         User user = userRepository.findByLogin(login);
 

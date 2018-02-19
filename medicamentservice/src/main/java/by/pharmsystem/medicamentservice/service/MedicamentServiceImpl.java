@@ -21,17 +21,29 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    public Medicament findById() {
-        return null;
+    public void addQuantity(long id, int quantity) {
+        MedicamentValidator.validateQuantity(quantity);
+
+        Medicament medicament = medicamentRepository.findOne(id);
+
+        int newQuauntity = medicament.getQuantity() + quantity;
+        medicament.setQuantity(quantity);
+
+        medicamentRepository.save(medicament);
+    }
+
+    @Override
+    public void delete(long id) {
+        medicamentRepository.delete(id);
     }
 
     @Override
     public List<Medicament> findByGroup(String group) {
-        return null;
+        return medicamentRepository.findByGroup(group);
     }
 
     @Override
     public List<Medicament> findByName(String name) {
-        return null;
+        return medicamentRepository.findByNameIgnoreCase(name);
     }
 }

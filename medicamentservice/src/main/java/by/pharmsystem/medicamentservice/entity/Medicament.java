@@ -7,7 +7,7 @@ import org.springframework.data.mongodb.core.mapping.Document;
 import java.io.Serializable;
 
 @Data
-@Document(collection = "users")
+@Document(collection = "medicaments")
 public class Medicament implements Serializable {
 
     private static final long serialVersionUID = -2416625424862852665L;
@@ -20,7 +20,7 @@ public class Medicament implements Serializable {
     private String amount;
     private String activeSubstances;
     private String country;
-    private boolean isPrescription;
+    private boolean prescription;
     private double price;
     private int quantity;
 }

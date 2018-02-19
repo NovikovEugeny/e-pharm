@@ -42,12 +42,7 @@ public final class UserValidator {
         if (!RegExp.test(RegExp.NAME_REG_EXP, data.get(ConstantStorage.NAME))) {
             throw new BadRequestException();
         }
-        if (data.get(ConstantStorage.LOGIN) == null || data.get(ConstantStorage.LOGIN).isEmpty()) {
-            throw new BadRequestException();
-        }
-        if (!RegExp.test(RegExp.EMAIL_REG_EXP, data.get(ConstantStorage.LOGIN))) {
-            throw new BadRequestException();
-        }
+        validateLogin(data.get(ConstantStorage.LOGIN));
         validateRole(data.get(ConstantStorage.ROLE));
     }
 
@@ -59,6 +54,15 @@ public final class UserValidator {
                 !role.equals(ConstantStorage.DOCTOR) &&
                 !role.equals(ConstantStorage.PHARMACIST) &&
                 !role.equals(ConstantStorage.ADMIN)) {
+            throw new BadRequestException();
+        }
+    }
+
+    public static void validateLogin(String login) {
+        if (login == null || login.isEmpty()) {
+            throw new BadRequestException();
+        }
+        if (!RegExp.test(RegExp.EMAIL_REG_EXP, login)) {
             throw new BadRequestException();
         }
     }

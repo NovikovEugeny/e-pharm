@@ -55,7 +55,12 @@ public final class MedicamentValidator {
         if (!RegExp.test(RegExp.PRICE_REG_EXP, Double.toString(medicament.getPrice()))) {
             throw new BadRequestException();
         }
-        if (medicament.getQuantity() <= 0) {
+        validateQuantity(medicament.getQuantity());
+
+    }
+
+    public static void validateQuantity(int quantity) {
+        if (quantity <= 0) {
             throw new BadRequestException();
         }
     }
