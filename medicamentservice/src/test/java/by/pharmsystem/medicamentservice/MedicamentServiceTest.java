@@ -52,7 +52,4 @@ public class MedicamentServiceTest {
         medicamentService.addQuantity(22, 0);
     }
 
-
-
-
 }
