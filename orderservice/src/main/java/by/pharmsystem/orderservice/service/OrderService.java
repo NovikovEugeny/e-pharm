@@ -8,9 +8,13 @@ public interface OrderService {
 
     void createOrder(Order order);
 
-    void cancelOrder(long id);
+    void confirmOrder();
 
-    List<Order> showOrders(long clientId);
+    void cancelOrder(long orderId);
 
-    List<Order> showUnconfirmedOrders(long clientId);
+    List<Order> showOrders();
+
+    List<Order> showClientOrders(long clientId);
+
+    List<Order> showUnconfirmedClientOrders(long clientId);
 }

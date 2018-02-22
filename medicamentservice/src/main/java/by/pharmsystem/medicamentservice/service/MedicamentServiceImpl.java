@@ -17,6 +17,9 @@ public class MedicamentServiceImpl implements MedicamentService {
     @Override
     public void add(Medicament medicament) {
         MedicamentValidator.validateAddition(medicament);
+
+        long id = medicamentRepository.count() + 1;
+        medicament.setId(id);
         medicamentRepository.save(medicament);
     }
 
