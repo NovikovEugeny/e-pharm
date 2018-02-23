@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class OrderController {
@@ -24,8 +25,8 @@ public class OrderController {
     }
 
     @PatchMapping("/confirm-order")
-    public void confirmOrder() {
-        orderService.confirmOrder();
+    public void confirmOrder(@RequestBody Map<String, Long> data) {
+        orderService.confirmOrder(data);
     }
 
     @GetMapping("/show-orders")
@@ -33,13 +34,13 @@ public class OrderController {
         return orderService.showOrders();
     }
 
-    @GetMapping("/show-unconfirmed-orders/{clientId}/")
-    public List<Order> showUnconfirmedClientOrders(@PathVariable long clientId) {
-        return orderService.showUnconfirmedClientOrders(clientId);
-    }
-
-    @GetMapping("/show-confirmed-orders/{clientId}/")
+    @GetMapping("/show-confirmed-client-orders/{clientId}/")
     public List<Order> showConfirmedClientOrders(@PathVariable long clientId) {
         return orderService.showClientOrders(clientId);
+    }
+
+    @GetMapping("/show-unconfirmed-client-orders/{clientId}/")
+    public List<Order> showUnconfirmedClientOrders(@PathVariable long clientId) {
+        return orderService.showUnconfirmedClientOrders(clientId);
     }
 }

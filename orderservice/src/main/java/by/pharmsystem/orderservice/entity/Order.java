@@ -20,6 +20,7 @@ public class Order implements Serializable {
     private long pharmacistId;
     private Map<Long, Integer> medicaments;
     private double cost;
+    private String address;
     private Date requestDate;
     private Date responseDate;
     private String status;
