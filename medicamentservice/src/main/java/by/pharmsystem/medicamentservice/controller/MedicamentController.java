@@ -13,12 +13,12 @@ public class MedicamentController {
     @Autowired
     private MedicamentService medicamentService;
 
-    @GetMapping("show-list-by-group/{group}/")
+    @GetMapping("/show-list-by-group/{group}/")
     public List<Medicament> showByGroup(@PathVariable String group) {
         return medicamentService.findByGroup(group);
     }
 
-    @GetMapping("show-list-by-name/{name}/")
+    @GetMapping("/show-list-by-name/{name}/")
     public List<Medicament> showByName(@PathVariable String name) {
         return medicamentService.findByName(name);
     }
@@ -33,8 +33,13 @@ public class MedicamentController {
         medicamentService.addQuantity(id, quantity);
     }
 
-    @DeleteMapping("deleteMedicament/{id}/")
+    @DeleteMapping("/deleteMedicament/{id}/")
     public void delete(@PathVariable long id) {
         medicamentService.delete(id);
+    }
+
+    @PostMapping("/get-prices")
+    public List<Double> getPrices(@RequestBody List<Long> identifiers) {
+        return medicamentService.getPrices(identifiers);
     }
 }

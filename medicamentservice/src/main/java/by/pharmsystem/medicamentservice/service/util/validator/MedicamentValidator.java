@@ -2,8 +2,8 @@ package by.pharmsystem.medicamentservice.service.util.validator;
 
 import by.pharmsystem.medicamentservice.entity.Medicament;
 import by.pharmsystem.medicamentservice.service.exception.BadRequestException;
-import by.pharmsystem.medicamentservice.service.util.constant.FormStorage;
-import by.pharmsystem.medicamentservice.service.util.constant.GroupStorage;
+import by.pharmsystem.medicamentservice.service.util.constant.Form;
+import by.pharmsystem.medicamentservice.service.util.constant.Group;
 import by.pharmsystem.medicamentservice.service.util.validator.regexp.RegExp;
 
 
@@ -19,13 +19,13 @@ public final class MedicamentValidator {
         if (medicament.getGroup() == null || medicament.getGroup().isEmpty()) {
             throw new BadRequestException();
         }
-        if (!GroupStorage.isExists(medicament.getGroup())) {
+        if (!Group.isExists(medicament.getGroup())) {
             throw new BadRequestException();
         }
         if (medicament.getForm() == null || medicament.getForm().isEmpty()) {
             throw new BadRequestException();
         }
-        if (!FormStorage.isExists(medicament.getForm())) {
+        if (!Form.isExists(medicament.getForm())) {
             throw new BadRequestException();
         }
         if (medicament.getAmount() == null || medicament.getAmount().isEmpty()) {

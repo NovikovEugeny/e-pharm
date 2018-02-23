@@ -1,6 +1,6 @@
 package by.pharmsystem.medicamentservice.service.util.constant;
 
-public enum FormStorage {
+public enum Form {
     PILLS,
     CAPSULES,
     POWDER,
@@ -27,7 +27,7 @@ public enum FormStorage {
     public static boolean isExists(String form) {
         boolean isExists = true;
         try {
-            FormStorage.valueOf(form.toUpperCase());
+            Form.valueOf(form.toUpperCase());
         } catch (IllegalArgumentException exc) {
             isExists = false;
         }

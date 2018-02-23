@@ -1,6 +1,6 @@
 package by.pharmsystem.medicamentservice.service.util.constant;
 
-public enum GroupStorage {
+public enum Group {
     ANTIVIRAL,
     ANTIBIOTICS,
     ALLERGY,
@@ -24,7 +24,7 @@ public enum GroupStorage {
     public static boolean isExists(String group) {
         boolean isExists = true;
         try {
-            GroupStorage.valueOf(group.toUpperCase()
+            Group.valueOf(group.toUpperCase()
                     .replace(" ", "_")
                     .replace("-", "_")
             );

@@ -15,4 +15,6 @@ public interface MedicamentService {
     List<Medicament> findByGroup(String group);
 
     List<Medicament> findByName(String name);
+
+    List<Double> getPrices(List<Long> identifiers);
 }

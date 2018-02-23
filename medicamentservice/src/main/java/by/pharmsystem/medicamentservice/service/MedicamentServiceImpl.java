@@ -6,6 +6,7 @@ import by.pharmsystem.medicamentservice.service.util.validator.MedicamentValidat
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -48,5 +49,12 @@ public class MedicamentServiceImpl implements MedicamentService {
     @Override
     public List<Medicament> findByName(String name) {
         return medicamentRepository.findByNameIgnoreCase(name);
+    }
+
+    @Override
+    public List<Double> getPrices(List<Long> identifiers) {
+        List<Double> prices = new ArrayList<>();
+        identifiers.forEach(id -> prices.add(medicamentRepository.findOne(id).getPrice()));
+        return prices;
     }
 }
