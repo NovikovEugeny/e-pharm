@@ -5,14 +5,12 @@ import by.pharmsystem.orderservice.repository.OrderRepository;
 import by.pharmsystem.orderservice.service.util.ConstantStorage;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
-import org.springframework.http.MediaType;
-import org.springframework.http.RequestEntity;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.client.RestTemplate;
 
-import java.net.URI;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
@@ -27,26 +25,21 @@ public class OrderServiceImpl implements OrderService {
     public void createOrder(Order order) {
         //TODO: validate order
 
-        //TODO: calculate cost
+        List<Long> identifiers = new ArrayList<>();
+        Map<Long, Integer> idQuantity = order.getMedicaments();
+        idQuantity.forEach((k, v) -> identifiers.add(k));
 
-        List<Long> body = new ArrayList<>();
-        body.add(1L);
-        body.add(2L);
-        body.add(3L);
+        HttpEntity<List<Long>> request = new HttpEntity<>(identifiers);
+        ParameterizedTypeReference<List<Double>> type = new ParameterizedTypeReference<List<Double>>() {};
+        ResponseEntity<List<Double>> response = new RestTemplate().exchange("", HttpMethod.POST, request, type);
+        List<Double> prices = response.getBody();
 
-        RequestEntity request = RequestEntity
-                .post(new URI("http://localhost:8084/get"))
-                .accept(MediaType.APPLICATION_JSON)
-                .body(body);
-        ParameterizedTypeReference<List<Double>> myBean = new ParameterizedTypeReference<List<Double>>() {};
-        ResponseEntity<List<Double>> response = new RestTemplate().exchange(request, myBean);
-        List<Double> dl = response.getBody();
-        System.out.println(dl);
-
+        final double[] cost = {0};
+        idQuantity.forEach((k, v) -> cost[0] += v * prices.get(identifiers.indexOf(k)));
 
         long id = orderRepository.count() + 1;
         order.setId(id);
-        //order.setCost(cost);
+        order.setCost(cost[0]);
         orderRepository.save(order);
     }
 
