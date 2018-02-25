@@ -9,16 +9,4 @@ public class NoSuchEmail extends RuntimeException {
     public NoSuchEmail() {
         super();
     }
-
-    public NoSuchEmail(String message) {
-        super(message);
-    }
-
-    public NoSuchEmail(Exception e) {
-        super(e);
-    }
-
-    public NoSuchEmail(String message, Exception e) {
-        super(message, e);
-    }
 }

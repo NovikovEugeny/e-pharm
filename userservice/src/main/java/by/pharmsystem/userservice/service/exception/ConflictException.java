@@ -9,17 +9,4 @@ public class ConflictException extends RuntimeException {
     public ConflictException(){
         super();
     }
-
-    public ConflictException(String message){
-        super(message);
-    }
-
-    public ConflictException(Exception e){
-        super(e);
-    }
-
-    public ConflictException(String message, Exception e){
-        super(message, e);
-    }
-
 }
