@@ -3,6 +3,7 @@ package by.pharmsystem.orderservice.service;
 import by.pharmsystem.orderservice.entity.Order;
 import by.pharmsystem.orderservice.repository.OrderRepository;
 import by.pharmsystem.orderservice.service.util.ConstantStorage;
+import by.pharmsystem.orderservice.service.util.validator.OrderValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.ParameterizedTypeReference;
 import org.springframework.http.HttpEntity;
@@ -12,6 +13,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -23,7 +25,7 @@ public class OrderServiceImpl implements OrderService {
 
     @Override
     public void createOrder(Order order) {
-        //TODO: validate order
+        OrderValidator.validate(order);
 
         List<Long> identifiers = new ArrayList<>();
         Map<Long, Integer> idQuantity = order.getMedicaments();
@@ -40,6 +42,8 @@ public class OrderServiceImpl implements OrderService {
         long id = orderRepository.count() + 1;
         order.setId(id);
         order.setCost(cost[0]);
+        order.setRequestDate(new Date());
+        order.setStatus(ConstantStorage.STATUS_NEW);
         orderRepository.save(order);
     }
 
@@ -55,10 +59,9 @@ public class OrderServiceImpl implements OrderService {
 
         Order order = orderRepository.findOne(orderId);
         order.setPharmacistId(pharmacistId);
+        order.setResponseDate(new Date());
         order.setStatus(ConstantStorage.STATUS_SENT);
         orderRepository.save(order);
-
-        //TODO: send message on email
     }
 
     @Override
