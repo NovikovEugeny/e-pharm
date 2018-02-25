@@ -7,7 +7,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Service
 public class MedicamentServiceImpl implements MedicamentService {
@@ -52,9 +54,16 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    public List<Double> getPrices(List<Long> identifiers) {
-        List<Double> prices = new ArrayList<>();
-        identifiers.forEach(id -> prices.add(medicamentRepository.findOne(id).getPrice()));
-        return prices;
+    public Map<Long, Double> getPrices(List<Long> identifiers) {
+        Map<Long, Double> idPrice = new HashMap<>();
+        identifiers.forEach(id -> idPrice.put(id, medicamentRepository.findOne(id).getPrice()));
+        return idPrice;
+    }
+
+    @Override
+    public Map<Long, Boolean> getRecipeReuirements(List<Long> identifiers) {
+        Map<Long, Boolean> idRequirement = new HashMap<>();
+        identifiers.forEach(id -> idRequirement.put(id, medicamentRepository.findOne(id).isRecipe()));
+        return idRequirement;
     }
 }

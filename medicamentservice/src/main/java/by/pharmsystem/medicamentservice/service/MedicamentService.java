@@ -3,6 +3,7 @@ package by.pharmsystem.medicamentservice.service;
 import by.pharmsystem.medicamentservice.entity.Medicament;
 
 import java.util.List;
+import java.util.Map;
 
 public interface MedicamentService {
 
@@ -16,5 +17,7 @@ public interface MedicamentService {
 
     List<Medicament> findByName(String name);
 
-    List<Double> getPrices(List<Long> identifiers);
+    Map<Long, Double> getPrices(List<Long> identifiers);
+
+    Map<Long, Boolean> getRecipeReuirements(List<Long> identifiers);
 }

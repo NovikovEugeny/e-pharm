@@ -20,7 +20,7 @@ public class Medicament implements Serializable {
     private String amount;
     private String activeSubstances;
     private String country;
-    private boolean prescription;
+    private boolean recipe;
     private double price;
     private int quantity;
 }

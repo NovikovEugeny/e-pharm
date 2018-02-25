@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class MedicamentController {
@@ -39,7 +40,12 @@ public class MedicamentController {
     }
 
     @PostMapping("/get-prices")
-    public List<Double> getPrices(@RequestBody List<Long> identifiers) {
+    public Map<Long, Double> getPrices(@RequestBody List<Long> identifiers) {
         return medicamentService.getPrices(identifiers);
+    }
+
+    @PostMapping("/get-recipe-requirements")
+    public Map<Long, Boolean> getRecipeRequirements(@RequestBody List<Long> identifiers) {
+        return medicamentService.getRecipeReuirements(identifiers);
     }
 }
