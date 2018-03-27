@@ -61,7 +61,7 @@ public class MedicamentServiceImpl implements MedicamentService {
     }
 
     @Override
-    public Map<Long, Boolean> getRecipeReuirements(List<Long> identifiers) {
+    public Map<Long, Boolean> getRecipeRequirements(List<Long> identifiers) {
         Map<Long, Boolean> idRequirement = new HashMap<>();
         identifiers.forEach(id -> idRequirement.put(id, medicamentRepository.findOne(id).isRecipe()));
         return idRequirement;

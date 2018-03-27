@@ -8,7 +8,10 @@ import org.joda.time.DateTime;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.Date;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 @Service
 public class RecipeServiceImpl implements RecipeService {
@@ -34,9 +37,19 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public void closeRecipe(long recipeId) {
+    public void closeRecipes(List<Long> identifiers) {
+        identifiers.forEach(recipeId -> {
+            Recipe recipe = recipeRepository.findOne(recipeId);
+            recipe.setStatus(ConstantStorage.STATUS_CLOSED);
+            recipeRepository.save(recipe);
+        });
+    }
+
+    @Override
+    public void extendRecipe(long recipeId) {
         Recipe recipe = recipeRepository.findOne(recipeId);
-        recipe.setStatus(ConstantStorage.STATUS_CLOSED);
+        recipe.setEndDate(new DateTime(recipe.getEndDate()).plusMonths(3).toDate());
+        recipe.setStatus(ConstantStorage.STATUS_OPEN);
         recipeRepository.save(recipe);
     }
 
@@ -50,8 +63,17 @@ public class RecipeServiceImpl implements RecipeService {
     }
 
     @Override
-    public Recipe getClientRecipe(long clientId, long medicamentId) {
-        return recipeRepository.findByClientIdAndMedicamentId(clientId, medicamentId);
+    public Map<Long, Integer> getClientRecipes(long clientId) {
+        List<Recipe> recipes = recipeRepository.findByClientId(clientId);
+
+        if (recipes == null) {
+            return null;
+        } else {
+            return recipes.stream()
+                    .filter(recipe -> recipe.getStatus().equals(ConstantStorage.STATUS_OPEN)
+                            && recipe.getEndDate().after(new Date()))
+                    .collect(Collectors.toMap(Recipe::getMedicamentId, Recipe::getQuantity));
+        }
     }
 
     @Override

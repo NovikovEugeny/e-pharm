@@ -11,9 +11,11 @@ public interface RecipeService {
 
     void updateMedicamentQuantity(long recipeId, int quantity);
 
-    void closeRecipe(long recipeId);
+    void closeRecipes(List<Long> identifiers);
 
-    Map<Long, Recipe> getClientRecipePermission(long clientId, long medicamentId);
+    void extendRecipe(long recipeId);
+
+    Map<Long, Integer> getClientRecipes(long clientId);
 
     List<Recipe> showClientRecipes(long clientId);
 }

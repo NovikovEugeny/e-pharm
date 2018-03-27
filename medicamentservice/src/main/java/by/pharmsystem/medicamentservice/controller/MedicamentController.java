@@ -29,7 +29,7 @@ public class MedicamentController {
         medicamentService.add(medicament);
     }
 
-    @PatchMapping("/addQuantity/{id}/{quantity}/")
+    @PutMapping("/addQuantity/{id}/{quantity}/")
     public void addQuantity(@PathVariable long id, @PathVariable int quantity) {
         medicamentService.addQuantity(id, quantity);
     }
@@ -46,6 +46,6 @@ public class MedicamentController {
 
     @PostMapping("/get-recipe-requirements")
     public Map<Long, Boolean> getRecipeRequirements(@RequestBody List<Long> identifiers) {
-        return medicamentService.getRecipeReuirements(identifiers);
+        return medicamentService.getRecipeRequirements(identifiers);
     }
 }

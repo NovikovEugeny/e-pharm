@@ -19,5 +19,5 @@ public interface MedicamentService {
 
     Map<Long, Double> getPrices(List<Long> identifiers);
 
-    Map<Long, Boolean> getRecipeReuirements(List<Long> identifiers);
+    Map<Long, Boolean> getRecipeRequirements(List<Long> identifiers);
 }

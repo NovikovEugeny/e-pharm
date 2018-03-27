@@ -24,7 +24,7 @@ public class OrderController {
         orderService.cancelOrder(orderId);
     }
 
-    @PatchMapping("/confirm-order")
+    @PutMapping("/confirm-order")
     public void confirmOrder(@RequestBody Map<String, Long> data) {
         orderService.confirmOrder(data);
     }

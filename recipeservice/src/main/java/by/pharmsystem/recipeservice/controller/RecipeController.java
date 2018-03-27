@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Map;
 
 @RestController
 public class RecipeController {
@@ -18,19 +19,24 @@ public class RecipeController {
         recipeService.addRecipe(recipe);
     }
 
-    @PatchMapping("/update-medicament-quantity/{recipeId}/{quantity}/")
+    @PutMapping("/update-medicament-quantity/{recipeId}/{quantity}/")
     public void updateMedicamentQuantity(@PathVariable long recipeId, @PathVariable int quantity) {
         recipeService.updateMedicamentQuantity(recipeId, quantity);
     }
 
-    @PatchMapping("/close-recipe/{recipeId}/")
-    public void closeRecipe(@PathVariable long recipeId) {
-        recipeService.closeRecipe(recipeId);
+    @PutMapping("/close-recipes")
+    public void closeRecipe(@RequestBody List<Long> identifiers) {
+        recipeService.closeRecipes(identifiers);
     }
 
-    @GetMapping("/get-client-recipe/{clientId}/{medicamentId}/}")
-    public Recipe getClientRecipe(@PathVariable long clientId, @PathVariable long medicamentId) {
-        return recipeService.getClientRecipe(clientId, medicamentId);
+    @PutMapping("/extend-recipe/{recipeId}/")
+    public void extendRecipe(@PathVariable long recipeId) {
+        recipeService.extendRecipe(recipeId);
+    }
+
+    @GetMapping("/get-client-recipes/{clientId}/")
+    public Map<Long, Integer> getClientRecipe(@PathVariable long clientId) {
+        return recipeService.getClientRecipes(clientId);
     }
 
     @GetMapping("/show-client-recipes/{clientId}/")
