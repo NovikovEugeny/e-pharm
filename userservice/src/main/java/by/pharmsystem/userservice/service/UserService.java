@@ -2,17 +2,13 @@ package by.pharmsystem.userservice.service;
 
 import by.pharmsystem.userservice.entity.User;
 
-import java.util.Map;
-
 public interface UserService {
 
-    User signIn(String login, String password);
+    User signIn(String id, String password);
 
-    void signUp(Map<String, String> data);
+    User signUp(User user);
 
-    void delete(String email);
+    void signUpEmpl(User user);
 
-    void changeRole(String email, String newRole);
-
-    void changeLogin(Map<String, String> data);
+    void changeRole(String id, String newRole);
 }

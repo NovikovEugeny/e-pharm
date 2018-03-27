@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -26,22 +25,19 @@ public class UserController {
 
     @PostMapping("/sign-in")
     public User signIn(@RequestBody User user, HttpServletResponse response) {
-        String token = securityService.setAuthentication(user.getLogin(), user.getPassword());
-        setCookie(token, response);
-        return userService.signIn(user.getLogin(), user.getPassword());
+        setCookie(user, response);
+        return userService.signIn(user.getId(), user.getPassword());
     }
 
-    /*data содержит:
-            -name
-            -login(email)
-            -role
-            -регион(1 цифра)
-            -номер поликлиники(2 цифры)
-            -номер карты(6 цифр)
-    */
     @PostMapping("/sign-up")
-    public void signUp(@RequestBody Map<String, String> data, HttpServletResponse response) {
-        userService.signUp(data);
+    public User signUp(@RequestBody User user, HttpServletResponse response) {
+        setCookie(user, response);
+        return userService.signUp(user);
+    }
+
+    @PostMapping("/sign-up-employee")
+    public void signUpEmpl(@RequestBody User user) {
+        userService.signUpEmpl(user);
     }
 
     @PostMapping("/log-out")
@@ -49,22 +45,13 @@ public class UserController {
         deleteCookie(response);
     }
 
-    @DeleteMapping("/delete-user/{email}/")
-    public void delete(@PathVariable String email) {
-        userService.delete(email);
+    @PutMapping("/change-role/{id}/{role}/")
+    public void changeRole(@PathVariable String id, @PathVariable String role) {
+        userService.changeRole(id, role);
     }
 
-    @PatchMapping("/change-role/{email}/{role}/")
-    public void changeRole(@PathVariable String email, @PathVariable String role) {
-        userService.changeRole(email, role);
-    }
-
-    @PatchMapping("/change-login")
-    public void changeLogin(@RequestBody Map<String, String> data) {
-        userService.changeLogin(data);
-    }
-
-    private void setCookie(String token, HttpServletResponse response) {
+    private void setCookie(User user, HttpServletResponse response) {
+        String token = securityService.setAuthentication(user.getId(), user.getPassword());
         Cookie cookie = new Cookie(tokenName, token);
         cookie.setPath(cookiePath);
         response.addCookie(cookie);

@@ -20,8 +20,8 @@ public class UserDetailsServiceImpl implements UserDetailsService {
     private UserRepository userRepository;
 
     @Override
-    public UserDetails loadUserByUsername(String login) throws UsernameNotFoundException {
-        User user = userRepository.findByLogin(login);
+    public UserDetails loadUserByUsername(String id) throws UsernameNotFoundException {
+        User user = userRepository.findOne(id);
 
         if (user == null) {
             throw new UsernameNotFoundException("user not found");
@@ -30,6 +30,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
         Set<GrantedAuthority> grantedAuthorities = new HashSet<>();
         grantedAuthorities.add(new SimpleGrantedAuthority(user.getRole()));
 
-        return new org.springframework.security.core.userdetails.User(user.getLogin(), user.getPassword(), grantedAuthorities);
+        return new org.springframework.security.core.userdetails.User(user.getId(), user.getPassword(), grantedAuthorities);
     }
 }
