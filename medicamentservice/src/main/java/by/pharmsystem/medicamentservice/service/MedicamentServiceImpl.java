@@ -1,7 +1,9 @@
 package by.pharmsystem.medicamentservice.service;
 
 import by.pharmsystem.medicamentservice.entity.Medicament;
+import by.pharmsystem.medicamentservice.entity.Pharma;
 import by.pharmsystem.medicamentservice.repository.MedicamentRepository;
+import by.pharmsystem.medicamentservice.repository.PharmaRepository;
 import by.pharmsystem.medicamentservice.service.util.validator.MedicamentValidator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,41 +17,49 @@ import java.util.Map;
 public class MedicamentServiceImpl implements MedicamentService {
 
     @Autowired
-    private MedicamentRepository medicamentRepository;
+    private PharmaRepository pharmaRepository;
 
     @Override
-    public void add(Medicament medicament) {
+    public void add(Medicament medicament, String city) {
         MedicamentValidator.validateAddition(medicament);
 
-        long id = medicamentRepository.count() + 1;
-        medicament.setId(id);
-        medicamentRepository.save(medicament);
+        Pharma pharma = pharmaRepository.findOne(city);
+        List<Medicament> medicaments = pharma.getMedicaments();
+
+        medicament.setId(medicaments.size() + 1);
+        medicaments.add(medicament);
+
+        pharmaRepository.save(pharma);
     }
 
     @Override
-    public void addQuantity(long id, int quantity) {
+    public void addQuantity(long id, int quantity, String city) {
         MedicamentValidator.validateQuantity(quantity);
 
-        Medicament medicament = medicamentRepository.findOne(id);
+        Pharma pharma = pharmaRepository.findOne(city);
+        List<Medicament> medicaments = pharma.getMedicaments();
+        Medicament medicament = medicaments.stream().filter(m -> m.getId() == id).findFirst().orElse(null);
 
-        int newQuauntity = medicament.getQuantity() + quantity;
-        medicament.setQuantity(quantity);
+        if (medicament != null) {
+            int newQuauntity = medicament.getQuantity() + quantity;
+            medicament.setQuantity(quantity);
+        }
 
-        medicamentRepository.save(medicament);
+        pharmaRepository.save(pharma);
     }
 
     @Override
-    public void delete(long id) {
-        medicamentRepository.delete(id);
+    public void delete(long id, String city) {
+        //medicamentRepository.delete(id);
     }
 
     @Override
-    public List<Medicament> findByGroup(String group) {
-        return medicamentRepository.findByGroup(group);
+    public List<Medicament> findByGroup(String group, String city) {
+        return /*medicamentRepository.findByGroup(group);*/null;
     }
 
     @Override
-    public List<Medicament> findByName(String name) {
+    public List<Medicament> findByName(String name, String city) {
         return medicamentRepository.findByNameIgnoreCase(name);
     }
 

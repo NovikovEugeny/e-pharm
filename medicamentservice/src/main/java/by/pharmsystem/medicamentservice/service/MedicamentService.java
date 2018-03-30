@@ -7,17 +7,17 @@ import java.util.Map;
 
 public interface MedicamentService {
 
-    void add(Medicament medicament);
+    void add(Medicament medicament, String city);
 
-    void addQuantity(long id, int quantity);
+    void addQuantity(long id, int quantity, String city);
 
-    void delete(long id);
+    void delete(long id, String city);
 
-    List<Medicament> findByGroup(String group);
+    List<Medicament> findByGroup(String group, String city);
 
-    List<Medicament> findByName(String name);
+    List<Medicament> findByName(String name, String city);
 
-    Map<Long, Double> getPrices(List<Long> identifiers);
+    Map<Long, Double> getPrices(List<Long> identifiers, String city);
 
     Map<Long, Boolean> getRecipeRequirements(List<Long> identifiers);
 }

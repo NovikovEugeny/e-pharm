@@ -14,34 +14,34 @@ public class MedicamentController {
     @Autowired
     private MedicamentService medicamentService;
 
-    @GetMapping("/show-list-by-group/{group}/")
-    public List<Medicament> showByGroup(@PathVariable String group) {
-        return medicamentService.findByGroup(group);
+    @GetMapping("/show-list-by-group/{group}/{city}/")
+    public List<Medicament> showByGroup(@PathVariable String group, @PathVariable String city) {
+        return medicamentService.findByGroup(group, city);
     }
 
-    @GetMapping("/show-list-by-name/{name}/")
-    public List<Medicament> showByName(@PathVariable String name) {
-        return medicamentService.findByName(name);
+    @GetMapping("/show-list-by-name/{name}/{city}/")
+    public List<Medicament> showByName(@PathVariable String name, @PathVariable String city) {
+        return medicamentService.findByName(name, city);
     }
 
-    @PostMapping("/add-new-medicament")
-    public void add(@RequestBody Medicament medicament) {
-        medicamentService.add(medicament);
+    @PostMapping("/add-new-medicament/{city}/")
+    public void add(@RequestBody Medicament medicament, @PathVariable String city) {
+        medicamentService.add(medicament, city);
     }
 
-    @PutMapping("/addQuantity/{id}/{quantity}/")
-    public void addQuantity(@PathVariable long id, @PathVariable int quantity) {
-        medicamentService.addQuantity(id, quantity);
+    @PutMapping("/addQuantity/{id}/{quantity}/{city/}")
+    public void addQuantity(@PathVariable long id, @PathVariable int quantity, @PathVariable String city) {
+        medicamentService.addQuantity(id, quantity, city);
     }
 
-    @DeleteMapping("/deleteMedicament/{id}/")
-    public void delete(@PathVariable long id) {
-        medicamentService.delete(id);
+    @DeleteMapping("/deleteMedicament/{id}/{city}/")
+    public void delete(@PathVariable long id, @PathVariable String city) {
+        medicamentService.delete(id, city);
     }
 
-    @PostMapping("/get-prices")
-    public Map<Long, Double> getPrices(@RequestBody List<Long> identifiers) {
-        return medicamentService.getPrices(identifiers);
+    @PostMapping("/get-prices/{city}/")
+    public Map<Long, Double> getPrices(@RequestBody List<Long> identifiers, @PathVariable String city) {
+        return medicamentService.getPrices(identifiers, city);
     }
 
     @PostMapping("/get-recipe-requirements")
